@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Invitaciones Mágicas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('https://res.cloudinary.com/dufxtzcpl/image/upload/v1758234971/fiesta-cumpleanos-cintas-colgantes-guirnaldas-habitacion-decorada_1268-30628_wumliy.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- Contenedor principal de la aplicación -->
+    <div id="app-container" class="relative z-10 flex items-center justify-center min-h-screen p-4 bg-black/30">
+
+        <!-- Pantalla 1: Formulario -->
+        <div id="form-screen" class="w-full max-w-2xl">
+            <div class="bg-black/40 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-8 space-y-6">
+                <div class="text-center">
+                    <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-400 to-blue-400">Crea tu Invitación</h1>
+                    <p class="text-gray-300 mt-2">Llena los detalles para generar una invitación mágica.</p>
+                </div>
+                
+                <form id="invitation-form" class="space-y-4">
+                    <!-- Campos del formulario -->
+                    <div>
+                        <label for="nombre_festejado" class="block text-sm font-medium text-gray-200">Nombre del Festejado(a):</label>
+                        <input type="text" id="nombre_festejado" name="nombre_festejado" required class="mt-1 block w-full bg-white/10 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                    </div>
+
+                    <div>
+                        <label for="anfitriones" class="block text-sm font-medium text-gray-200">Anfitriones:</label>
+                        <input type="text" id="anfitriones" name="anfitriones" required class="mt-1 block w-full bg-white/10 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="lugar" class="block text-sm font-medium text-gray-200">Lugar:</label>
+                            <input type="text" id="lugar" name="lugar" required class="mt-1 block w-full bg-white/10 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                        </div>
+                        <div>
+                            <label for="tipo_fiesta" class="block text-sm font-medium text-gray-200">Tipo de Fiesta:</label>
+                            <select id="tipo_fiesta" name="tipo_fiesta" required class="mt-1 block w-full bg-gray-900/50 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                                <option value="">Selecciona una opción</option>
+                                <option value="15_anos">15 Años</option>
+                                <option value="boda">Boda</option>
+                                <option value="baby_shower_boy">Baby Shower (Niño)</option>
+                                <option value="baby_shower_girl">Baby Shower (Niña)</option>
+                                <option value="despedida_soltera">Despedida de Soltera</option>
+                                <option value="despedida_soltero">Despedida de Soltero</option>
+                                <option value="graduacion">Graduación</option>
+                                <option value="cumpleanos_nina">Cumpleaños (Niña)</option>
+                                <option value="cumpleanos_nino">Cumpleaños (Niño)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="fecha" class="block text-sm font-medium text-gray-200">Fecha:</label>
+                            <input type="date" id="fecha" name="fecha" required class="mt-1 block w-full bg-white/10 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                        </div>
+                        <div>
+                            <label for="hora" class="block text-sm font-medium text-gray-200">Hora:</label>
+                            <input type="time" id="hora" name="hora" required class="mt-1 block w-full bg-white/10 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                        </div>
+                    </div>
+
+                    <!-- Campos condicionales para cumpleaños -->
+                    <div id="birthday-fields" class="hidden space-y-4 pt-2">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <div>
+                                <label for="edad_festejado" class="block text-sm font-medium text-gray-200">Edad que cumple:</label>
+                                <input type="number" id="edad_festejado" name="edad_festejado" class="mt-1 block w-full bg-white/10 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                            </div>
+                            <div>
+                                <label for="tematica" class="block text-sm font-medium text-gray-200">Temática:</label>
+                                <select id="tematica" name="tematica" class="mt-1 block w-full bg-gray-900/50 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                                    <option value="">Selecciona temática</option>
+                                    <option value="dinosaurio">Dinosaurio</option>
+                                    <option value="pirata">Pirata</option>
+                                    <option value="spiderman">Spiderman</option>
+                                    <option value="minions">Minions</option>
+                                    <option value="princesa">Princesa</option>
+                                    <option value="bratz">Bratz</option>
+                                    <option value="peppa_pig">Peppa Pig</option>
+                                    <option value="plim_plim">Plim Plim</option>
+                                    <option value="ladybug">Ladybug</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-200">Opción de Regalo:</label>
+                        <div class="mt-2 flex items-center space-x-6">
+                            <label class="flex items-center">
+                                <input type="radio" name="regalo" value="mesa_regalos" class="form-radio h-4 w-4 text-pink-400 bg-gray-900/50 border-white/30 focus:ring-pink-400" checked>
+                                <span class="ml-2 text-gray-200">Mesa de Regalos</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="regalo" value="sobre" class="form-radio h-4 w-4 text-pink-400 bg-gray-900/50 border-white/30 focus:ring-pink-400">
+                                <span class="ml-2 text-gray-200">Sobre</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-200">Email de Contacto:</label>
+                        <input type="email" id="email" name="email" required class="mt-1 block w-full bg-white/10 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                    </div>
+
+                    <div>
+                        <label for="whatsapp" class="block text-sm font-medium text-gray-200">WhatsApp:</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" required class="mt-1 block w-full bg-white/10 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                    </div>
+
+                    <div>
+                        <label for="cancion" class="block text-sm font-medium text-gray-200">Enlace a Canción Favorita (Spotify/YouTube):</label>
+                        <input type="url" id="cancion" name="cancion" class="mt-1 block w-full bg-white/10 border-white/20 rounded-md py-2 px-3 text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-pink-400">
+                    </div>
+
+                    <div>
+                        <label for="fotos" class="block text-sm font-medium text-gray-200">Fotos del Festejado(a) (hasta 3):</label>
+                        <input type="file" id="fotos" name="fotos" multiple accept="image/*" class="mt-1 block w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-400 file:text-white hover:file:bg-pink-500 cursor-pointer">
+                    </div>
+
+                    <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-yellow-400 text-white font-bold py-3 px-4 rounded-lg hover:from-pink-600 hover:to-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-yellow-400 transition-transform transform hover:scale-105 shadow-lg">
+                        Generar Invitación
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Pantalla de Carga -->
+        <div id="loading-screen" class="hidden text-center">
+            <svg class="animate-spin -ml-1 mr-3 h-10 w-10 text-pink-400 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <h2 class="text-2xl font-semibold mt-4">Creando magia...</h2>
+            <p class="text-gray-300">Estamos preparando tu invitación.</p>
+        </div>
+
+        <!-- Pantalla 2: Invitación Generada -->
+        <div id="invitation-screen" class="hidden w-full">
+            <!-- El contenido HTML del webhook se insertará aquí -->
+        </div>
+
+    </div>
+
+    <script>
+        const tipoFiestaSelect = document.getElementById('tipo_fiesta');
+        const birthdayFields = document.getElementById('birthday-fields');
+        const edadFestejadoInput = document.getElementById('edad_festejado');
+        const tematicaSelect = document.getElementById('tematica');
+        
+        const formScreen = document.getElementById('form-screen');
+        const loadingScreen = document.getElementById('loading-screen');
+        const invitationScreen = document.getElementById('invitation-screen');
+        const form = document.getElementById('invitation-form');
+        const fotosInput = document.getElementById('fotos');
+
+        // Lógica para mostrar/ocultar campos de cumpleaños
+        tipoFiestaSelect.addEventListener('change', () => {
+            const selectedValue = tipoFiestaSelect.value;
+            if (selectedValue === 'cumpleanos_nino' || selectedValue === 'cumpleanos_nina') {
+                birthdayFields.classList.remove('hidden');
+                edadFestejadoInput.required = true;
+                tematicaSelect.required = true;
+            } else {
+                birthdayFields.classList.add('hidden');
+                edadFestejadoInput.required = false;
+                tematicaSelect.required = false;
+            }
+        });
+
+        // Lógica para validar cantidad de fotos
+        fotosInput.addEventListener('change', () => {
+            if (fotosInput.files.length > 3) {
+                alert('¡Solo puedes subir un máximo de 3 fotos!');
+                fotosInput.value = ''; // Limpiar la selección
+            }
+        });
+
+        // Lógica del envío del formulario
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // URL del webhook de n8n
+            const webhookUrl = 'https://miia360n8n.ktrachitas.store/webhook-test/invitacion'; 
+
+            // Mostrar pantalla de carga y ocultar formulario
+            formScreen.classList.add('hidden');
+            loadingScreen.classList.remove('hidden');
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    body: formData,
+                    // No necesitas 'Content-Type', el navegador lo establece automáticamente para FormData
+                });
+
+                if (!response.ok) {
+                    // Si la respuesta no es exitosa, lanza un error
+                    throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
+                }
+
+                // El webhook debe responder con el HTML de la invitación
+                const invitationHtml = await response.text();
+
+                // Inserta el HTML en la pantalla de invitación
+                invitationScreen.innerHTML = invitationHtml;
+                
+                // Muestra la invitación y oculta la carga
+                loadingScreen.classList.add('hidden');
+                invitationScreen.classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error al enviar el formulario:', error);
+                // En caso de error, mostrar un mensaje y volver al formulario
+                alert('Hubo un problema al generar tu invitación. Por favor, inténtalo de nuevo.');
+                loadingScreen.classList.add('hidden');
+                formScreen.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
+
